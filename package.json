@@ -1,0 +1,37 @@
+{
+  "name": "atmocube-metrics",
+  "version": "0.0.1",
+  "description": "A Node.js server that exposes metrics of the Atomocube.",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf ./dist",
+    "start": "ts-node ./src/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wokim/atmocube-metrics.git"
+  },
+  "keywords": [
+    "atmocube"
+  ],
+  "author": "wonshikkim.kr@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/wokim/atmocube-metrics/issues"
+  },
+  "homepage": "https://github.com/wokim/atmocube-metrics#readme",
+  "dependencies": {
+    "@widesky/modbus-serial": "^9.0.1",
+    "express": "^4.18.2",
+    "lodash": "^4.17.21",
+    "prom-client": "^14.2.0"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.17",
+    "@types/lodash": "^4.14.196",
+    "@types/node": "^20.4.9",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.1.6"
+  }
+}
