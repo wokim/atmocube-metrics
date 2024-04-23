@@ -23,6 +23,7 @@ import {
   noxIndexGauge,
 } from './metrics';
 import { isUndefined } from 'lodash';
+import { calculateDewPoint } from './dewPoint';
 
 const app = express();
 
@@ -73,6 +74,10 @@ async function getStatus() {
   const available = (await client.readDiscreteInputs(0x0040, 20)).data;
   await new Promise<void>((resolve) => client.close(resolve));
 
+  const temperature = result.readInt16BE(12) / 100;
+  const humidity = result.readUInt16BE(14) / 100;
+  const dewPoint = calculateDewPoint(temperature, humidity);
+
   return {
     ...(available[0] ? { tvoc: result.readUInt16BE(0) / 1000 } : {}),
     pm1: result.readUInt16BE(2) / 10,
@@ -80,8 +85,9 @@ async function getStatus() {
     pm4: result.readUInt16BE(6) / 10,
     pm10: result.readUInt16BE(8) / 10,
     co2: result.readUInt16BE(10),
-    temperature: result.readInt16BE(12) / 100,
-    humidity: result.readUInt16BE(14) / 100,
+    temperature,
+    humidity,
+    dewPoint,
     abs_humidity: result.readUInt16BE(16),
     pressure: result.readUInt16BE(18) / 10,
     noise: result.readUInt16BE(20),
